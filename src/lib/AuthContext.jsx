@@ -23,7 +23,14 @@ export const AuthProvider = ({ children }) => {
       setAuthError(null);
       
       try {
-        const publicSettings = await base44.app.getPublicSettings();
+        // Safety timeout of 3.5s so Vercel visitors never get stuck on a blank/spinner screen
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("App settings request timed out")), 3500)
+        );
+        const publicSettings = await Promise.race([
+          base44.app.getPublicSettings(),
+          timeoutPromise
+        ]);
         setAppPublicSettings(publicSettings);
         
         // If we got the app public settings successfully, check if user is authenticated

@@ -11,6 +11,7 @@ import SiteSchema from '@/components/SiteSchema';
 import SplashScreen from '@/components/app/SplashScreen';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import RoleGate from '@/components/app/RoleGate';
+import ErrorBoundary from '@/components/ErrorBoundary';
 import { RoleProvider } from '@/lib/state/RoleContext';
 import { CartProvider } from '@/lib/state/CartContext';
 // App shell + vendor layout (migrated from the FireLink project)
@@ -156,20 +157,19 @@ const AuthenticatedApp = () => {
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-rose-600 rounded-full animate-spin"></div>
+      <div className="fixed inset-0 flex items-center justify-center bg-white">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-9 h-9 border-4 border-slate-200 border-t-rose-600 rounded-full animate-spin"></div>
+          <span className="text-xs font-medium text-slate-500">Loading FireLink...</span>
+        </div>
       </div>
     );
   }
 
-  if (authError) {
-    if (authError.type === 'user_not_registered') {
-      return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
-      navigateToLogin();
-      return null;
-    }
+  if (authError && authError.type === 'user_not_registered') {
+    return <UserNotRegisteredError />;
   }
+
 
   return (
     <RoleProvider>
@@ -362,18 +362,20 @@ const AuthenticatedApp = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <SplashScreen>
-          <Router>
-            <ScrollToTop />
-            <SiteSchema />
-            <AuthenticatedApp />
-          </Router>
-          <Toaster />
-        </SplashScreen>
-      </QueryClientProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <SplashScreen>
+            <Router>
+              <ScrollToTop />
+              <SiteSchema />
+              <AuthenticatedApp />
+            </Router>
+            <Toaster />
+          </SplashScreen>
+        </QueryClientProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }
 
