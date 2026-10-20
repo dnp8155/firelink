@@ -36,7 +36,7 @@ export default function VendorsSection() {
           </div>
         ) : (
           <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 sm:grid-cols-2 lg:grid-cols-3">
-            {vendors.slice(0, 6).map((v) => (
+            {(Array.isArray(vendors) ? vendors : []).slice(0, 6).map((v) => (
               <Link
                 key={v.id}
                 to="/vendors"

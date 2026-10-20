@@ -11,7 +11,8 @@ export function useList(entityName, filter = {}, sort = "-created_date", limit =
     setLoading(true);
     try {
       const result = await base44.entities[entityName].filter(filter, sort, limit);
-      setData(result || []);
+      const list = Array.isArray(result) ? result : (Array.isArray(result?.data) ? result.data : (Array.isArray(result?.items) ? result.items : []));
+      setData(list);
       setError(null);
     } catch (e) {
       setError(e);

@@ -19,13 +19,12 @@ export default function FeaturedProducts() {
   useConsumePendingAction(authed);
   const [wishlist, setWishlist] = useState(() => { try { return JSON.parse(localStorage.getItem("fsc_wishlist")) || []; } catch { return []; } });
 
-  const featured = useMemo(
-    () =>
-      [...products]
-        .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || (b.rating || 0) - (a.rating || 0))
-        .slice(0, 8),
-    [products]
-  );
+  const featured = useMemo(() => {
+    const arr = Array.isArray(products) ? products : [];
+    return [...arr]
+      .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0) || (b.rating || 0) - (a.rating || 0))
+      .slice(0, 8);
+  }, [products]);
 
   const toggleWish = (p) =>
     gate({
