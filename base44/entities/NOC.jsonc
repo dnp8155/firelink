@@ -1,0 +1,98 @@
+{
+  "name": "NOC",
+  "type": "object",
+  "properties": {
+    "noc_number": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "organization_name": {
+      "type": "string"
+    },
+    "site_name": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "issue_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "document_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "valid",
+        "expiring_soon",
+        "expired",
+        "renewal_in_progress"
+      ],
+      "default": "valid"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "noc_number",
+    "organization_id",
+    "authority"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "name": "Offer",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "vendor_name": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "discount_type": {
+      "type": "string",
+      "enum": [
+        "percentage",
+        "flat"
+      ],
+      "default": "percentage"
+    },
+    "discount_value": {
+      "type": "number"
+    },
+    "max_discount": {
+      "type": "number"
+    },
+    "min_order_value": {
+      "type": "number",
+      "default": 0
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "applicable_products": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "usage_limit": {
+      "type": "number",
+      "default": 0
+    },
+    "used_count": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "expired",
+        "disabled"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "title",
+    "vendor_id",
+    "discount_type",
+    "discount_value"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.status": "active"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

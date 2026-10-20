@@ -1,0 +1,316 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "sku": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "subcategory": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "manufacturer": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "vendor_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "b2b_price": {
+      "type": "number"
+    },
+    "b2c_price": {
+      "type": "number"
+    },
+    "mrp": {
+      "type": "number"
+    },
+    "moq": {
+      "type": "number",
+      "default": 1
+    },
+    "stock": {
+      "type": "number",
+      "default": 0
+    },
+    "unit": {
+      "type": "string",
+      "default": "piece"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "datasheet_url": {
+      "type": "string"
+    },
+    "youtube_url": {
+      "type": "string"
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "reviews_count": {
+      "type": "number",
+      "default": 0
+    },
+    "location": {
+      "type": "string"
+    },
+    "fire_class": {
+      "type": "string"
+    },
+    "extinguishing_agent": {
+      "type": "string"
+    },
+    "capacity": {
+      "type": "string"
+    },
+    "operating_pressure": {
+      "type": "string"
+    },
+    "discharge_range": {
+      "type": "string"
+    },
+    "discharge_time": {
+      "type": "string"
+    },
+    "temperature_range": {
+      "type": "string"
+    },
+    "warranty_months": {
+      "type": "number",
+      "default": 0
+    },
+    "shelf_life": {
+      "type": "string"
+    },
+    "country_of_origin": {
+      "type": "string",
+      "default": "India"
+    },
+    "hsn_code": {
+      "type": "string"
+    },
+    "installation_type": {
+      "type": "string"
+    },
+    "application_area": {
+      "type": "string"
+    },
+    "applicable_standards": {
+      "type": "string"
+    },
+    "dimensions": {
+      "type": "string"
+    },
+    "weight_kg": {
+      "type": "number",
+      "default": 0
+    },
+    "material": {
+      "type": "string"
+    },
+    "rechargeable": {
+      "type": "boolean",
+      "default": false
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "approved",
+        "rejected",
+        "disabled"
+      ],
+      "default": "pending"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "price"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.approval_status": "approved"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "PRODUCT_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "PRODUCT_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "INVENTORY_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "PRODUCT_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

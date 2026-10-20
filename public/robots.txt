@@ -1,0 +1,56 @@
+User-agent: *
+Allow: /
+Allow: /products
+Allow: /services
+Allow: /vendors
+
+# Signed-in portals and auth flows — kept out of search results
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /select-role
+Disallow: /dashboard
+Disallow: /marketplace
+Disallow: /cart
+Disallow: /orders
+Disallow: /rfqs
+Disallow: /assets
+Disallow: /certificates
+Disallow: /wishlist
+Disallow: /admin/
+Disallow: /vendor/
+Disallow: /customer/
+Disallow: /technician/
+Disallow: /engineering/
+Disallow: /organization/
+Disallow: /verify/
+Disallow: /functions/
+
+# AI assistants and answer engines — welcome on the public storefront and knowledge pages
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Disallow: /login
+Disallow: /register
+Disallow: /dashboard
+Disallow: /cart
+Disallow: /orders
+Disallow: /admin/
+Disallow: /vendor/
+Disallow: /customer/
+Disallow: /technician/
+Disallow: /engineering/
+Disallow: /organization/
+Disallow: /functions/
+
+# Machine-readable summary of the platform for AI answer engines
+Sitemap: https://firelinkpo.base44.app/sitemap.xml
+Sitemap: https://firelinkpo.base44.app/llms.txt

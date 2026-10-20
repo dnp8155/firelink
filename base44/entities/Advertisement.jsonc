@@ -1,0 +1,122 @@
+{
+  "name": "Advertisement",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "vendor_name": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "target_url": {
+      "type": "string"
+    },
+    "placement": {
+      "type": "string",
+      "enum": [
+        "home",
+        "category",
+        "product_detail",
+        "sidebar",
+        "banner"
+      ],
+      "default": "banner"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "budget": {
+      "type": "number",
+      "default": 0
+    },
+    "impressions": {
+      "type": "number",
+      "default": 0
+    },
+    "clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "active",
+        "inactive"
+      ],
+      "default": "pending"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "title",
+    "image_url",
+    "placement"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.status": "active"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

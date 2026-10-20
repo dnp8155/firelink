@@ -1,0 +1,25 @@
+{
+  "name": "FireLink — Fire Safety Equipment & Services in India",
+  "short_name": "FireLink",
+  "description": "India's fire & safety marketplace: certified equipment, professional services, asset QR tracking and compliance tools.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ED1C24",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "https://media.base44.com/images/public/6abbc1d2fd63cf6ad8c46672/82422f3e0_fre-Edited.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://media.base44.com/images/public/6abbc1d2fd63cf6ad8c46672/82422f3e0_fre-Edited.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

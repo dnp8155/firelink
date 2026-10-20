@@ -1,0 +1,109 @@
+{
+  "name": "VendorDocument",
+  "type": "object",
+  "properties": {
+    "vendor_id": {
+      "type": "string"
+    },
+    "doc_type": {
+      "type": "string",
+      "enum": [
+        "gst_certificate",
+        "pan",
+        "company_registration",
+        "address_proof",
+        "bank_proof",
+        "signatory_id",
+        "msme_certificate",
+        "manufacturer_authorization",
+        "iso_certificate",
+        "product_certification",
+        "fire_safety_certification",
+        "contract",
+        "invoice",
+        "report",
+        "other"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "uploaded",
+        "under_review",
+        "approved",
+        "rejected",
+        "replacement_required",
+        "expired"
+      ],
+      "default": "uploaded"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "remarks": {
+      "type": "string"
+    },
+    "version": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "required": [
+    "vendor_id",
+    "doc_type"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

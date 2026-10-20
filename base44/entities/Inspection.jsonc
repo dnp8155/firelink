@@ -1,0 +1,163 @@
+{
+  "name": "Inspection",
+  "type": "object",
+  "properties": {
+    "inspection_number": {
+      "type": "string"
+    },
+    "asset_id": {
+      "type": "string"
+    },
+    "asset_name": {
+      "type": "string"
+    },
+    "asset_code": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "organization_name": {
+      "type": "string"
+    },
+    "site_name": {
+      "type": "string"
+    },
+    "template_name": {
+      "type": "string"
+    },
+    "checklist": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "guidance": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "na"
+            ]
+          },
+          "note": {
+            "type": "string"
+          },
+          "critical": {
+            "type": "boolean",
+            "default": false
+          },
+          "weight": {
+            "type": "number",
+            "default": 1
+          }
+        }
+      }
+    },
+    "passed_count": {
+      "type": "number",
+      "default": 0
+    },
+    "failed_count": {
+      "type": "number",
+      "default": 0
+    },
+    "score": {
+      "type": "number",
+      "default": 0
+    },
+    "passed": {
+      "type": "boolean",
+      "default": false
+    },
+    "condition_after": {
+      "type": "string",
+      "enum": [
+        "good",
+        "needs_attention",
+        "faulty"
+      ],
+      "default": "good"
+    },
+    "technician_id": {
+      "type": "string"
+    },
+    "technician_name": {
+      "type": "string"
+    },
+    "inspected_on": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "capa_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "inspection_number",
+    "asset_id",
+    "score"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

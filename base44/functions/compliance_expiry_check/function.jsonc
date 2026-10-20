@@ -1,0 +1,15 @@
+{
+  "name": "compliance_expiry_check",
+  "entry": "entry.ts",
+  "automations": [
+    {
+      "type": "scheduled",
+      "name": "daily_expiry_check",
+      "schedule_mode": "recurring",
+      "schedule_type": "simple",
+      "repeat_unit": "days",
+      "repeat_interval": 1,
+      "start_time": "02:30"
+    }
+  ]
+}

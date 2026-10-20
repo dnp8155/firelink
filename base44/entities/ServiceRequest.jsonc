@@ -1,0 +1,157 @@
+{
+  "name": "ServiceRequest",
+  "type": "object",
+  "properties": {
+    "request_number": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "asset_id": {
+      "type": "string"
+    },
+    "asset_name": {
+      "type": "string"
+    },
+    "site_name": {
+      "type": "string"
+    },
+    "service_type": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "default": "medium"
+    },
+    "description": {
+      "type": "string"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "sla_hours": {
+      "type": "number",
+      "default": 72
+    },
+    "sla_due_date": {
+      "type": "string"
+    },
+    "sla_status": {
+      "type": "string",
+      "enum": [
+        "on_track",
+        "due_soon",
+        "breached"
+      ],
+      "default": "on_track"
+    },
+    "escalation_level": {
+      "type": "number",
+      "default": 0
+    },
+    "escalated_at": {
+      "type": "string"
+    },
+    "assigned_technician_id": {
+      "type": "string"
+    },
+    "assigned_technician_name": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "assigned",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "open"
+    },
+    "completion_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "request_number",
+    "customer_id",
+    "service_type"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "data.assigned_technician_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "data.assigned_technician_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

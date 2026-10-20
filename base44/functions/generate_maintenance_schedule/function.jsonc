@@ -1,0 +1,4 @@
+{
+  "name": "generate_maintenance_schedule",
+  "entry": "entry.ts"
+}

@@ -1,0 +1,72 @@
+{
+  "name": "InspectionTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "interval_months": {
+      "type": "number",
+      "default": 6
+    },
+    "items": {
+      "type": "array",
+      "default": [],
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "guidance": {
+            "type": "string"
+          },
+          "critical": {
+            "type": "boolean",
+            "default": false
+          },
+          "weight": {
+            "type": "number",
+            "default": 1
+          }
+        }
+      }
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "display_order": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "rls": {
+    "read": {},
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "name": "Settlement",
+  "type": "object",
+  "properties": {
+    "vendor_id": {
+      "type": "string"
+    },
+    "vendor_name": {
+      "type": "string"
+    },
+    "period": {
+      "type": "string"
+    },
+    "order_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "order_count": {
+      "type": "number",
+      "default": 0
+    },
+    "gross": {
+      "type": "number"
+    },
+    "commission_rate": {
+      "type": "number",
+      "default": 0.05
+    },
+    "commission": {
+      "type": "number",
+      "default": 0
+    },
+    "net_payable": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "paid"
+      ],
+      "default": "pending"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "vendor_id",
+    "gross",
+    "net_payable"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "FINANCE_USER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "FINANCE_USER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

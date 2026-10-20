@@ -1,0 +1,217 @@
+{
+  "name": "Service",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "vendor_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "service_type": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "mrp": {
+      "type": "number"
+    },
+    "duration_hours": {
+      "type": "number",
+      "default": 1
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "service_location": {
+      "type": "string"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "approved",
+        "rejected",
+        "disabled"
+      ],
+      "default": "pending"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "reviews_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "price"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.approval_status": "approved"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "SERVICE_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "SERVICE_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "SERVICE_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

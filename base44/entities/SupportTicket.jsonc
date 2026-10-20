@@ -1,0 +1,106 @@
+{
+  "name": "SupportTicket",
+  "type": "object",
+  "properties": {
+    "ticket_number": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "order",
+        "payment",
+        "product",
+        "rfq",
+        "asset",
+        "certificate",
+        "compliance",
+        "service",
+        "technical"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium"
+    },
+    "description": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "assigned_to": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "assigned",
+        "in_progress",
+        "waiting_for_customer",
+        "resolved",
+        "closed"
+      ],
+      "default": "open"
+    }
+  },
+  "required": [
+    "ticket_number",
+    "subject",
+    "category",
+    "user_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

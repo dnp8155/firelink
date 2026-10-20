@@ -1,0 +1,97 @@
+{
+  "name": "Document",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "certificate",
+        "manual",
+        "datasheet",
+        "drawing",
+        "purchase_order",
+        "invoice",
+        "inspection_report",
+        "maintenance_report",
+        "fire_noc",
+        "engineering_report",
+        "other"
+      ],
+      "default": "other"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "organization_name": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "version": {
+      "type": "number",
+      "default": 1
+    },
+    "uploaded_by": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

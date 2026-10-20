@@ -1,0 +1,148 @@
+{
+  "name": "Asset",
+  "type": "object",
+  "properties": {
+    "asset_code": {
+      "type": "string"
+    },
+    "qr_code": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "serial_number": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "organization_name": {
+      "type": "string"
+    },
+    "site_id": {
+      "type": "string"
+    },
+    "site_name": {
+      "type": "string"
+    },
+    "building": {
+      "type": "string"
+    },
+    "floor": {
+      "type": "string"
+    },
+    "zone": {
+      "type": "string"
+    },
+    "location_detail": {
+      "type": "string"
+    },
+    "install_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "next_inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "under_maintenance",
+        "decommissioned"
+      ],
+      "default": "active"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "good",
+        "needs_attention",
+        "faulty",
+        "expired"
+      ],
+      "default": "good"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "order_id": {
+      "type": "string"
+    },
+    "order_number": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "asset_code",
+    "name",
+    "organization_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

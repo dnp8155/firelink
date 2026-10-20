@@ -1,0 +1,252 @@
+{
+  "name": "Vendor",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string"
+    },
+    "trade_name": {
+      "type": "string"
+    },
+    "business_type": {
+      "type": "string",
+      "enum": [
+        "manufacturer",
+        "distributor",
+        "reseller",
+        "service_provider",
+        "system_integrator"
+      ],
+      "default": "manufacturer"
+    },
+    "business_category": {
+      "type": "string",
+      "enum": [
+        "B2B",
+        "B2C"
+      ],
+      "default": "B2B"
+    },
+    "vendor_type": {
+      "type": "string",
+      "enum": [
+        "Sales",
+        "Sales & Service",
+        "Service"
+      ],
+      "default": "Sales"
+    },
+    "registration_number": {
+      "type": "string"
+    },
+    "gst_number": {
+      "type": "string"
+    },
+    "pan_number": {
+      "type": "string"
+    },
+    "msme_number": {
+      "type": "string"
+    },
+    "udyam_number": {
+      "type": "string"
+    },
+    "year_established": {
+      "type": "number"
+    },
+    "website": {
+      "type": "string"
+    },
+    "contact_person": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "pincode": {
+      "type": "string"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "brands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "services_offered": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "industries_served": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "service_locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "delivery_locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "employees_count": {
+      "type": "number",
+      "default": 0
+    },
+    "bank_name": {
+      "type": "string"
+    },
+    "account_holder": {
+      "type": "string"
+    },
+    "account_number": {
+      "type": "string"
+    },
+    "ifsc_code": {
+      "type": "string"
+    },
+    "bank_proof_url": {
+      "type": "string"
+    },
+    "digital_signature_url": {
+      "type": "string"
+    },
+    "auth_signature_url": {
+      "type": "string"
+    },
+    "manufacturer_auth_url": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "logo_url": {
+      "type": "string"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "submitted",
+        "documents_required",
+        "under_review",
+        "approved",
+        "rejected",
+        "suspended"
+      ],
+      "default": "submitted"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "admin_remarks": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "number",
+      "default": 0
+    },
+    "revenue": {
+      "type": "number",
+      "default": 0
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "profile_completion": {
+      "type": "number",
+      "default": 0
+    },
+    "subscription_tier": {
+      "type": "string",
+      "enum": [
+        "free",
+        "silver",
+        "gold"
+      ],
+      "default": "free"
+    },
+    "subscription_expires": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "company_name",
+    "contact_person"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.approval_status": "approved"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

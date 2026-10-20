@@ -1,0 +1,4 @@
+{
+  "name": "create_assets_from_order",
+  "entry": "entry.ts"
+}

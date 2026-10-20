@@ -1,0 +1,205 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "order_number": {
+      "type": "string"
+    },
+    "customer_id": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "vendor_name": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          },
+          "qty": {
+            "type": "number"
+          },
+          "image_url": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "subtotal": {
+      "type": "number"
+    },
+    "tax": {
+      "type": "number"
+    },
+    "shipping": {
+      "type": "number",
+      "default": 0
+    },
+    "total": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "accepted",
+        "packed",
+        "dispatched",
+        "delivered",
+        "cancelled",
+        "returned",
+        "refunded"
+      ],
+      "default": "pending"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "refunded",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "shipping_address": {
+      "type": "string"
+    },
+    "courier": {
+      "type": "string"
+    },
+    "tracking_number": {
+      "type": "string"
+    },
+    "return_reason": {
+      "type": "string"
+    },
+    "invoice_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_number",
+    "customer_id",
+    "total"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "data.vendor_id": "{{user.data.vendor_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "data.organization_id": "{{user.data.organization_id}}"
+        },
+        {
+          "data.customer_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "$and": [
+            {
+              "data.vendor_id": "{{user.data.vendor_id}}"
+            },
+            {
+              "$or": [
+                {
+                  "user_condition": {
+                    "data.staff_role": "VENDOR_ADMIN"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "ORDER_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "data.staff_role": "SALES_MANAGER"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor"
+                  }
+                },
+                {
+                  "user_condition": {
+                    "role": "vendor_admin"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

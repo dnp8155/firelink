@@ -1,0 +1,4 @@
+{
+  "name": "service_sla_check",
+  "entry": "entry.ts"
+}

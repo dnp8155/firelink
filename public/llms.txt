@@ -1,0 +1,53 @@
+# FireLink — Fire Safety Equipment, Services & Compliance Platform for India
+
+> FireLink is an India-focused fire and safety platform where organisations buy ISI/BIS-certified
+> fire safety equipment from platform-verified vendors, book professional fire safety services
+> (inspection, refilling, installation, testing, fire audit, annual maintenance contracts), and
+> track every asset, certificate and Fire NOC with QR codes, expiry alerts and a compliance
+> calendar. FireLink is designed and built by BrightLoop Technology.
+
+Canonical site: https://firelinkpo.base44.app/
+Languages: English (en-IN), Hindi (hi-IN)
+Coverage: All of India — PAN-India delivery of equipment and PAN-India service coverage
+Contact: /contact — enquiries answered within one working day, Monday to Saturday
+
+## Main pages
+- Home: /
+- Fire safety products (marketplace): /products
+- Fire safety services: /services
+- Verified vendors: /vendors
+- About FireLink: /about
+- Contact: /contact
+
+## Product categories
+Fire extinguishers (ABC dry powder, CO2, clean agent, water, foam, wet chemical); fire detectors
+and alarm systems; sprinklers; hose and reels; fire pumps; fire safety signage; personal
+protective equipment (PPE). Listings show price, MRP, stock, MOQ, HSN code, applicable standards,
+country of origin and manufacturer warranty; B2B and B2C pricing is shown where the vendor
+publishes both.
+
+## Services
+Inspection and testing; extinguisher refilling and hydro testing; installation and commissioning;
+fire alarm and hydrant system maintenance; fire audit and NOC documentation support; annual
+maintenance contracts (AMC); on-site technician visits with service reports.
+
+## Compliance knowledge (short answers)
+- Fire NOC: issued by the local fire authority and required for most commercial, industrial and
+  high-rise buildings before occupancy; renewed periodically, commonly every three to five years
+  depending on the authority. FireLink tracks the NOC, its expiry and renewal reminders per site.
+- Extinguisher refilling: per IS 15683, refill after every use and otherwise at least annually;
+  monthly visual check, annual maintenance visit, hydrostatic testing typically every five years.
+- Choosing an extinguisher: 4–6 kg ABC dry powder for homes and offices; CO2 or clean agent for
+  electrical/server rooms; wet chemical (Class F) for kitchens.
+- AMC: scheduled preventive visits, inspection and testing of extinguishers, hydrants, alarms and
+  pumps, refilling or replacement where needed, and a service report after each visit.
+- Verification: certificates and assets registered on FireLink carry a QR code that opens a public
+  verification page showing the certificate number, issuing authority, issue/expiry dates and status.
+
+## Audience
+Organisations (factories, warehouses, hospitals, schools, hotels, offices, data centres, housing
+societies), vendors and manufacturers, fire safety engineers, technicians and consultants.
+
+## Not indexed
+Signed-in portals (customer, vendor, organisation admin, technician, engineering, platform admin),
+cart, checkout and the login/registration flows are private and excluded from search indexing.

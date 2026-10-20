@@ -1,0 +1,53 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "customer",
+        "org_admin",
+        "vendor",
+        "vendor_admin",
+        "technician",
+        "engineer",
+        "platform_admin",
+        "super_admin",
+        "admin",
+        "user"
+      ],
+      "default": "user"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "vendor_id": {
+      "type": "string"
+    },
+    "staff_role": {
+      "type": "string",
+      "enum": [
+        "VENDOR_ADMIN",
+        "SALES_MANAGER",
+        "PRODUCT_MANAGER",
+        "INVENTORY_MANAGER",
+        "ORDER_MANAGER",
+        "SERVICE_MANAGER",
+        "FINANCE_USER",
+        "VIEW_ONLY"
+      ]
+    },
+    "phone": {
+      "type": "string"
+    },
+    "designation": {
+      "type": "string"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
