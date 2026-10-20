@@ -36,9 +36,9 @@ export const AuthProvider = ({ children }) => {
         }
         setIsLoadingPublicSettings(false);
       } catch (appError) {
-        console.error('App state check failed:', appError);
+        console.warn('App public settings check failed, proceeding in guest mode:', appError);
         
-        // Handle app-level errors
+        // Handle explicit auth required from backend
         if (appError.status === 403 && appError.data?.extra_data?.reason) {
           const reason = appError.data.extra_data.reason;
           if (reason === 'auth_required') {
@@ -51,20 +51,12 @@ export const AuthProvider = ({ children }) => {
               type: 'user_not_registered',
               message: 'User not registered for this app'
             });
-          } else {
-            setAuthError({
-              type: reason,
-              message: appError.message
-            });
           }
-        } else {
-          setAuthError({
-            type: 'unknown',
-            message: appError.message || 'Failed to load app'
-          });
         }
         setIsLoadingPublicSettings(false);
         setIsLoadingAuth(false);
+        setIsAuthenticated(false);
+        setAuthChecked(true);
       }
     } catch (error) {
       console.error('Unexpected error:', error);

@@ -15,10 +15,10 @@ const getAppParams = () => {
 		clearStoredAccessToken();
 	}
 	return {
-		appId: import.meta.env.VITE_BASE44_APP_ID,
+		appId: import.meta.env.VITE_BASE44_APP_ID || '6ad7dafd390d1f0afa549b34',
 		token: getAccessToken(),
 		functionsVersion: import.meta.env.VITE_BASE44_FUNCTIONS_VERSION,
-		appBaseUrl: import.meta.env.VITE_BASE44_APP_BASE_URL,
+		appBaseUrl: import.meta.env.VITE_BASE44_APP_BASE_URL || 'https://firelinkpo.base44.app',
 	}
 }
 
